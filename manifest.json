@@ -130,7 +130,6 @@ function getFilteredProducts() {
 function renderProducts() {
   const items = getFilteredProducts();
   resultCount.textContent = `${items.length} نتیجه`;
-
   productGrid.innerHTML = '';
 
   if (!items.length) {
@@ -144,18 +143,13 @@ function renderProducts() {
 
   items.forEach((product) => {
     const node = productTemplate.content.firstElementChild.cloneNode(true);
-    node.querySelector('.badge').textContent = product.badge;
-    node.querySelector('.product-media').innerHTML = `
-      <span class="badge">${product.badge}</span>
-      <span>${product.image}</span>
-    `;
+    const media = node.querySelector('.product-media');
+    media.innerHTML = `<span class="badge">${product.badge}</span><span>${product.image}</span>`;
     node.querySelector('.store').textContent = product.store;
     node.querySelector('.rating').textContent = `⭐ ${product.rating}`;
     node.querySelector('.title').textContent = product.name;
     node.querySelector('.description').textContent = product.description;
-    node.querySelector('.specs').innerHTML = product.specs
-      .map((spec) => `<span>${spec}</span>`)
-      .join('');
+    node.querySelector('.specs').innerHTML = product.specs.map((spec) => `<span>${spec}</span>`).join('');
     node.querySelector('.price').textContent = formatPrice(product.price);
 
     const compareBtn = node.querySelector('.compare-btn');
@@ -185,8 +179,10 @@ function toggleCompare(productId) {
     state.compare = state.compare.slice(1);
   }
 
-  const item = products.find((product) => product.id === productId);
-  if (item) state.compare.push(item);
+  const product = products.find((item) => item.id === productId);
+  if (product) {
+    state.compare.push(product);
+  }
 }
 
 function renderComparison() {
@@ -239,7 +235,6 @@ if ('serviceWorker' in navigator) {
 }
 
 let deferredPrompt = null;
-
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   deferredPrompt = event;

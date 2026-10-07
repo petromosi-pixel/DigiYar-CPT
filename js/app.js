@@ -12,7 +12,9 @@
   --radius: 22px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
@@ -26,7 +28,9 @@ body {
   color: var(--text);
 }
 
-button, input, select {
+button,
+input,
+select {
   font: inherit;
 }
 
@@ -81,7 +85,11 @@ button {
   letter-spacing: 0.04em;
 }
 
-h1, h2, h3, h4, p {
+h1,
+h2,
+h3,
+h4,
+p {
   margin: 0;
 }
 

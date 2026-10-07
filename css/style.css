@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#2a4169" />
     <meta
       name="description"
-      content="دیجی‌یار؛ جستجو، مقایسه و پیشنهاد محصولات با تجربه‌ای یکپارچه و ساده"
+      content="دیجی‌یار؛ جستجوی هوشمند، مقایسه و پیشنهاد بهترین محصولات"
     />
-    <title>دیجی‌یار | جستجوی هوشمند</title>
+    <title>دیجی‌یار | هوشمند خرید</title>
     <link rel="manifest" href="./manifest.json" />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
@@ -22,7 +22,9 @@
             <h1>دیجی‌یار</h1>
           </div>
         </div>
-        <button id="installBtn" class="ghost-button" type="button">نصب اپ</button>
+        <button id="installBtn" class="ghost-button" type="button" aria-label="نصب اپ دیجی‌یار">
+          نصب اپ
+        </button>
       </header>
 
       <main>
@@ -31,10 +33,11 @@
             <p class="label">جستجوی هوشمند و سریع</p>
             <h2>محصول مناسب را بر اساس نیاز و بودجه پیدا کن.</h2>
             <p>
-              از میان فروشگاه‌های معتبر، بهترین گزینه‌ها را با قیمت و ویژگی‌های مهم
-              مقایسه کن.
+              بهترین گزینه‌ها را از میان فروشگاه‌های معتبر، با قیمت، رتبه و ویژگی‌های مهم
+              مقایسه کن و تصمیم‌گیری سریع‌تر داشته باش.
             </p>
           </div>
+
           <div class="hero-actions">
             <label class="searchbox" for="searchInput">
               <span>جستجو</span>
@@ -45,6 +48,7 @@
                 autocomplete="off"
               />
             </label>
+
             <div class="filters-row">
               <label>
                 <span>دسته‌بندی</span>
@@ -56,6 +60,7 @@
                   <option value="fashion">مد و پوشاک</option>
                 </select>
               </label>
+
               <label>
                 <span>مرتب‌سازی</span>
                 <select id="sortFilter">
