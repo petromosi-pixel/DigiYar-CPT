@@ -1,0 +1,259 @@
+const products = [
+  {
+    id: 1,
+    name: 'گوشی موبایل سامسونگ A54',
+    category: 'mobile',
+    store: 'دیجی‌کالا',
+    brand: 'سامسونگ',
+    price: 13800000,
+    rating: 4.7,
+    badge: 'پرفروش',
+    image: '📱',
+    description: 'نمایشگر AMOLED، حافظه ۸ گیگابایت رم و دوربین ۵۰ مگاپیکسل.',
+    specs: ['۶.۴ اینچ', '۵G', '۱۲۸ گیگ'],
+  },
+  {
+    id: 2,
+    name: 'لپ‌تاپ ۱۵ اینچی ایسوس VivoBook',
+    category: 'laptop',
+    store: 'اسنپ‌شاپ',
+    brand: 'ایسوس',
+    price: 26900000,
+    rating: 4.6,
+    badge: 'تخفیف',
+    image: '💻',
+    description: 'برای کارهای روزمره و آموزشی، با عملکرد خوب و سبک‌وزن.',
+    specs: ['Ryzen 5', '۱۶ گیگ', 'SSD 512'],
+  },
+  {
+    id: 3,
+    name: 'یخچال ۳۵۰ لیتری ساید بای ساید',
+    category: 'home',
+    store: 'کفش‌کالا',
+    brand: 'الکترولوکس',
+    price: 41500000,
+    rating: 4.8,
+    badge: 'برند مطرح',
+    image: '🧊',
+    description: 'طراحی مدرن و مصرف بهینه انرژی برای خانه‌های بزرگ.',
+    specs: ['No Frost', '۴۵۰W', 'Noiseless'],
+  },
+  {
+    id: 4,
+    name: 'پک بالاتنه مردانه اسپورت',
+    category: 'fashion',
+    store: 'مدیا',
+    brand: 'نایکی',
+    price: 8900000,
+    rating: 4.5,
+    badge: 'جدید',
+    image: '👕',
+    description: 'پارچه سبک و مناسب برای استفاده روزانه و ورزش.',
+    specs: ['XL', 'نخی', 'آبی'],
+  },
+  {
+    id: 5,
+    name: 'گوشی موبایل شیائومی Redmi Note 13',
+    category: 'mobile',
+    store: 'دیجی‌کالا',
+    brand: 'شیائومی',
+    price: 12700000,
+    rating: 4.6,
+    badge: 'بهترین انتخاب',
+    image: '📱',
+    description: 'دوربین قوی و باتری بالا برای استفاده طولانی مدت.',
+    specs: ['۶.۷ اینچ', 'مناسب روزانه', '۶۶W'],
+  },
+  {
+    id: 6,
+    name: 'مبل سه نفره چوبی مدرن',
+    category: 'home',
+    store: 'خانه‌مد',
+    brand: 'مدرن‌خانه',
+    price: 22900000,
+    rating: 4.7,
+    badge: 'پیشنهاد ویژه',
+    image: '🛋️',
+    description: 'مناسب آپارتمان‌های مدرن و فضاهای کوچک با طراحی شیک.',
+    specs: ['چوبی', 'سه‌نفره', '۲ رنگ'],
+  },
+];
+
+const state = {
+  query: '',
+  category: 'all',
+  sort: 'recommended',
+  compare: [],
+};
+
+const productGrid = document.getElementById('productGrid');
+const resultCount = document.getElementById('resultCount');
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+const sortFilter = document.getElementById('sortFilter');
+const compareBox = document.getElementById('compareBox');
+const productTemplate = document.getElementById('productCardTemplate');
+const installBtn = document.getElementById('installBtn');
+
+function formatPrice(value) {
+  return new Intl.NumberFormat('fa-IR').format(value) + ' تومان';
+}
+
+function getFilteredProducts() {
+  const normalizedQuery = state.query.trim().toLowerCase();
+
+  let filtered = products.filter((item) => {
+    const matchesQuery =
+      !normalizedQuery ||
+      item.name.toLowerCase().includes(normalizedQuery) ||
+      item.brand.toLowerCase().includes(normalizedQuery) ||
+      item.store.toLowerCase().includes(normalizedQuery) ||
+      item.description.toLowerCase().includes(normalizedQuery);
+
+    const matchesCategory =
+      state.category === 'all' || item.category === state.category;
+
+    return matchesQuery && matchesCategory;
+  });
+
+  if (state.sort === 'priceAsc') {
+    filtered = [...filtered].sort((a, b) => a.price - b.price);
+  }
+
+  if (state.sort === 'priceDesc') {
+    filtered = [...filtered].sort((a, b) => b.price - a.price);
+  }
+
+  return filtered;
+}
+
+function renderProducts() {
+  const items = getFilteredProducts();
+  resultCount.textContent = `${items.length} نتیجه`;
+
+  productGrid.innerHTML = '';
+
+  if (!items.length) {
+    productGrid.innerHTML = `
+      <div class="empty-state">
+        نتیجه‌ای پیدا نشد. عبارت دیگری برای جستجو وارد کنید.
+      </div>
+    `;
+    return;
+  }
+
+  items.forEach((product) => {
+    const node = productTemplate.content.firstElementChild.cloneNode(true);
+    node.querySelector('.badge').textContent = product.badge;
+    node.querySelector('.product-media').innerHTML = `
+      <span class="badge">${product.badge}</span>
+      <span>${product.image}</span>
+    `;
+    node.querySelector('.store').textContent = product.store;
+    node.querySelector('.rating').textContent = `⭐ ${product.rating}`;
+    node.querySelector('.title').textContent = product.name;
+    node.querySelector('.description').textContent = product.description;
+    node.querySelector('.specs').innerHTML = product.specs
+      .map((spec) => `<span>${spec}</span>`)
+      .join('');
+    node.querySelector('.price').textContent = formatPrice(product.price);
+
+    const compareBtn = node.querySelector('.compare-btn');
+    const isSelected = state.compare.some((item) => item.id === product.id);
+    compareBtn.textContent = isSelected ? 'حذف از مقایسه' : 'مقایسه';
+    compareBtn.setAttribute('aria-pressed', String(isSelected));
+
+    compareBtn.addEventListener('click', () => {
+      toggleCompare(product.id);
+      renderProducts();
+      renderComparison();
+    });
+
+    productGrid.appendChild(node);
+  });
+}
+
+function toggleCompare(productId) {
+  const exists = state.compare.some((item) => item.id === productId);
+
+  if (exists) {
+    state.compare = state.compare.filter((item) => item.id !== productId);
+    return;
+  }
+
+  if (state.compare.length >= 2) {
+    state.compare = state.compare.slice(1);
+  }
+
+  const item = products.find((product) => product.id === productId);
+  if (item) state.compare.push(item);
+}
+
+function renderComparison() {
+  if (!state.compare.length) {
+    compareBox.innerHTML = `
+      <div class="compare-item">
+        <h4>هیچ محصولی انتخاب نشده</h4>
+        <p>برای مقایسه دو محصول، روی دکمه «مقایسه» یک یا دو مورد را انتخاب کنید.</p>
+      </div>
+    `;
+    return;
+  }
+
+  compareBox.innerHTML = state.compare
+    .map(
+      (product) => `
+        <article class="compare-item">
+          <h4>${product.name}</h4>
+          <ul>
+            <li>فروشگاه: ${product.store}</li>
+            <li>قیمت: ${formatPrice(product.price)}</li>
+            <li>امتیاز: ${product.rating}</li>
+            <li>دسته‌بندی: ${product.category}</li>
+          </ul>
+        </article>
+      `
+    )
+    .join('');
+}
+
+searchInput.addEventListener('input', (event) => {
+  state.query = event.target.value;
+  renderProducts();
+});
+
+categoryFilter.addEventListener('change', (event) => {
+  state.category = event.target.value;
+  renderProducts();
+});
+
+sortFilter.addEventListener('change', (event) => {
+  state.sort = event.target.value;
+  renderProducts();
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
+
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredPrompt = event;
+  installBtn.hidden = false;
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.hidden = true;
+});
+
+installBtn.hidden = true;
+renderProducts();
+renderComparison();

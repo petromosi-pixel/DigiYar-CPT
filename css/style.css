@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2a4169" />
+    <meta
+      name="description"
+      content="دیجی‌یار؛ جستجو، مقایسه و پیشنهاد محصولات با تجربه‌ای یکپارچه و ساده"
+    />
+    <title>دیجی‌یار | جستجوی هوشمند</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">D</div>
+          <div>
+            <p class="eyebrow">دستیار هوشمند خرید</p>
+            <h1>دیجی‌یار</h1>
+          </div>
+        </div>
+        <button id="installBtn" class="ghost-button" type="button">نصب اپ</button>
+      </header>
+
+      <main>
+        <section class="hero card">
+          <div class="hero-copy">
+            <p class="label">جستجوی هوشمند و سریع</p>
+            <h2>محصول مناسب را بر اساس نیاز و بودجه پیدا کن.</h2>
+            <p>
+              از میان فروشگاه‌های معتبر، بهترین گزینه‌ها را با قیمت و ویژگی‌های مهم
+              مقایسه کن.
+            </p>
+          </div>
+          <div class="hero-actions">
+            <label class="searchbox" for="searchInput">
+              <span>جستجو</span>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="مثل: گوشی سامسونگ، لپ‌تاپ، مبل"
+                autocomplete="off"
+              />
+            </label>
+            <div class="filters-row">
+              <label>
+                <span>دسته‌بندی</span>
+                <select id="categoryFilter">
+                  <option value="all">همه</option>
+                  <option value="mobile">موبایل</option>
+                  <option value="laptop">لپ‌تاپ</option>
+                  <option value="home">لوازم خانه</option>
+                  <option value="fashion">مد و پوشاک</option>
+                </select>
+              </label>
+              <label>
+                <span>مرتب‌سازی</span>
+                <select id="sortFilter">
+                  <option value="recommended">پیشنهادی</option>
+                  <option value="priceAsc">قیمت: کم‌به‌زیاد</option>
+                  <option value="priceDesc">قیمت: زیادبه‌کم</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-row">
+          <article class="stat-box card">
+            <span>فروشگاه‌ها</span>
+            <strong>۱۲+</strong>
+          </article>
+          <article class="stat-box card">
+            <span>محصولات</span>
+            <strong>۲۴۰</strong>
+          </article>
+          <article class="stat-box card">
+            <span>میانگین صرفه‌جویی</span>
+            <strong>۱۸٪</strong>
+          </article>
+        </section>
+
+        <section class="results-header card">
+          <div>
+            <p class="label">پیشنهادات</p>
+            <h3>محصولات منتخب شما</h3>
+          </div>
+          <span id="resultCount" class="result-pill">۰ نتیجه</span>
+        </section>
+
+        <section id="productGrid" class="product-grid" aria-live="polite"></section>
+
+        <section class="comparison card">
+          <div class="section-head">
+            <div>
+              <p class="label">مقایسه</p>
+              <h3>دو محصول برای بررسی سریع</h3>
+            </div>
+          </div>
+          <div id="compareBox" class="compare-box"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="productCardTemplate">
+      <article class="product-card">
+        <div class="product-media">
+          <span class="badge"></span>
+        </div>
+        <div class="card-body">
+          <div class="meta-row">
+            <span class="store"></span>
+            <span class="rating"></span>
+          </div>
+          <h4 class="title"></h4>
+          <p class="description"></p>
+          <div class="specs"></div>
+          <div class="footer-row">
+            <div>
+              <small>قیمت</small>
+              <strong class="price"></strong>
+            </div>
+            <button type="button" class="compare-btn">مقایسه</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
